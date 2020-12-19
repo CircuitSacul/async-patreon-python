@@ -17,7 +17,9 @@ class API(object):
         super(API, self).__init__()
         self.access_token = access_token
 
-    async def get_campaigns(self, page_size, cursor=None,  includes=None, fields=None):
+    async def get_campaigns(
+        self, page_size, cursor=None,  includes=None, fields=None
+    ):
         url = 'campaigns'
         params = {'page[count]': page_size}
         if cursor:
@@ -30,12 +32,16 @@ class API(object):
         return await self.__get_jsonapi_doc(
             build_url(url, includes=includes, fields=fields)
         )
+
     async def get_identity(self, includes=None, fields=None):
         url = 'identity'
         return await self.__get_jsonapi_doc(
             build_url(url, includes=includes, fields=fields)
         )
-    async def get_webhooks(self, page_size, cursor=None,  includes=None, fields=None):
+
+    async def get_webhooks(
+        self, page_size, cursor=None,  includes=None, fields=None
+    ):
         url = 'webhooks'
         params = {'page[count]': page_size}
         if cursor:
@@ -48,7 +54,11 @@ class API(object):
         return await self.__get_jsonapi_doc(
             build_url(url, includes=includes, fields=fields)
         )
-    async def get_campaigns_by_id_members(self, resource_id, page_size, cursor=None,  includes=None, fields=None):
+
+    async def get_campaigns_by_id_members(
+        self, resource_id, page_size, cursor=None,
+        includes=None, fields=None
+    ):
         url = 'campaigns/{}/members'.format(resource_id)
         params = {'page[count]': page_size}
         if cursor:
@@ -61,16 +71,23 @@ class API(object):
         return await self.__get_jsonapi_doc(
             build_url(url, includes=includes, fields=fields)
         )
-    async def get_campaigns_by_id(self, resource_id, includes=None, fields=None):
+
+    async def get_campaigns_by_id(
+        self, resource_id, includes=None, fields=None
+    ):
         url = 'campaigns/{}'.format(resource_id)
         return await self.__get_jsonapi_doc(
             build_url(url, includes=includes, fields=fields)
         )
-    async def get_webhooks_by_id(self, resource_id, includes=None, fields=None):
+
+    async def get_webhooks_by_id(
+        self, resource_id, includes=None, fields=None
+    ):
         url = 'webhooks/{}'.format(resource_id)
         return await self.__get_jsonapi_doc(
             build_url(url, includes=includes, fields=fields)
         )
+
     async def get_members_by_id(self, resource_id, includes=None, fields=None):
         url = 'members/{}'.format(resource_id)
         return await self.__get_jsonapi_doc(
