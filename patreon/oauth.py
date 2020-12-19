@@ -1,4 +1,4 @@
-import requests
+from aiohttp_requests import requests
 
 from patreon.utils import user_agent_string
 
@@ -9,8 +9,8 @@ class OAuth(object):
         self.client_id = client_id
         self.client_secret = client_secret
 
-    def get_tokens(self, code, redirect_uri):
-        return self.__update_token({
+    async def get_tokens(self, code, redirect_uri):
+        return await self.__update_token({
             "grant_type": "authorization_code",
             "code": code,
             "client_id": self.client_id,
@@ -18,8 +18,8 @@ class OAuth(object):
             "redirect_uri": redirect_uri
         })
 
-    def refresh_token(self, refresh_token, redirect_uri=None):
-        return self.__update_token({
+    async def refresh_token(self, refresh_token, redirect_uri=None):
+        return await self.__update_token({
             "grant_type": "refresh_token",
             "refresh_token": refresh_token,
             "client_id": self.client_id,
@@ -27,12 +27,12 @@ class OAuth(object):
         })
 
     @staticmethod
-    def __update_token(params):
-        response = requests.post(
+    async def __update_token(params):
+        response = await requests.post(
             "https://www.patreon.com/api/oauth2/token",
             params=params,
             headers={
                 'User-Agent': user_agent_string(),
             }
         )
-        return response.json()
+        return await response.json()
